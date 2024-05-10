@@ -6,41 +6,34 @@ import java.util.Random;
 
 public class DinnerConstructor {
     HashMap<String, ArrayList<String>> menu = new HashMap<>();
-
     ArrayList<String> dishesInput = new ArrayList<>();
     Random random = new Random();
-
-    public void showMenu(){
-        if(menu.isEmpty()){
-            System.out.println("На данный момент не добавлено ни одного блюда!");
-        } else {
-            System.out.println(menu);
-        }
-    }
 
     public void dishToMenu(String dishType, String dishName) {
         if (menu.containsKey(dishType)) {
             ArrayList<String> dishesSet = menu.get(dishType);
+            if (dishesSet.contains(dishName)) {
+                System.out.println("Данное блюдо уже присутствует в меню! Попробуйте еще раз");
+                return;
+            }
             dishesSet.add(dishName);
         } else {
             ArrayList<String> dishesSet = new ArrayList<>();
             dishesSet.add(dishName);
             menu.put(dishType, dishesSet);
         }
-
-
-        System.out.println(menu);
+        System.out.println("В меню добавлено блюдо с типом " + dishType + " и названием " + dishName);
     }
 
-    public void getDishCombo(int numberOfCombos, ArrayList<String> dishInput) {
+    public void getDishCombo(int numberOfCombos, ArrayList<String> dishesInput) {
         for (int i = 1; i <= numberOfCombos; i++) {
             ArrayList<String> randomDishes = new ArrayList<>();
             System.out.println("Комбо " + i);
-            for (String dishType : dishInput) {
-                String randomDish = menu.get(dishType).get(random.nextInt(dishesInput.size()));
+            for (String dishType : dishesInput) {
+                String randomDish = menu.get(dishType).get(random.nextInt(menu.get(dishType).size()));
                 randomDishes.add(randomDish);
             }
-            System.out.println(dishesInput);
+            System.out.println(randomDishes);
         }
     }
 
@@ -53,6 +46,4 @@ public class DinnerConstructor {
         }
         return isInMenu;
     }
-
-
 }
