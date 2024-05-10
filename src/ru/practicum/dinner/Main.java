@@ -44,7 +44,7 @@ public class Main {
     }
 
     private static void generateDishCombo() {
-        if(dc.menu.isEmpty()){
+        if (dc.menu.isEmpty()) {
             System.out.println("На данный момент не добавлено ни одного блюда!");
             return;
         }
