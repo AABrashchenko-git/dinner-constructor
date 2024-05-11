@@ -42,6 +42,7 @@ public class DinnerConstructor {
         for (String dishType : menu.keySet()) {
             if (type.equalsIgnoreCase(dishType)) {
                 isInMenu = true;
+                break;
             }
         }
         return isInMenu;

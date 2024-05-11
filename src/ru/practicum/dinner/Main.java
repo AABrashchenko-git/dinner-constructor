@@ -12,7 +12,7 @@ public class Main {
 
         while (true) {
             printMenu();
-            String command = scanner.nextLine();
+            String command = scanner.nextLine().trim();
 
             switch (command) {
                 case "1":
@@ -53,16 +53,23 @@ public class Main {
         System.out.println("Начинаем конструировать обед...");
         System.out.println("Введите количество наборов, которые нужно сгенерировать:");
         int numberOfCombos;
-
-        try {
-            numberOfCombos = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
+        // Не знал про hasNextInt(), хороший способ проверки на ввод целого числа :) Спасибо!
+        // Реализовал его тут вместо конструкции try-catch
+        if (scanner.hasNextInt()) {
+            numberOfCombos = scanner.nextInt();
+        } else {
             System.out.println("Введите целое число!");
             return;
         }
 
         System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). " +
                 "Для завершения ввода введите пустую строку");
+        /* Вот тут интересная ситуация, как обсуждалось на QA-вебинарах и в пачке, после использования nextInt()
+        в буфере остается символ переноса строки, который считывается следующим за ним nextLine() - программа
+        работает некорректно. Поэтому добавил строку String clipboardCleaner, которая бы "очищала" буфер
+        перед последующим вводом данных */
+
+        String clipboardCleaner = scanner.nextLine();
         String nextItem = scanner.nextLine();
 
         while (!nextItem.isEmpty()) {
